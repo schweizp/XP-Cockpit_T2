@@ -5,6 +5,7 @@
 #define RESOLUTION 4
 
 // for syntax highlighting purposes
+#include "elapsedMillis.h"
 #include "usb_api.h"
 #include <Encoder.h>
 
@@ -12,10 +13,10 @@
 //#include "pushbutton.h"
 
 // hardware objects
-Encoder     setAlt(0, 27);      // Encoder AP altitude
-Encoder     setHdg_2(1, 3);     // Encoder AP heading
-Encoder     setSpeed(2, 4);     // Encoder AP speed
-Encoder     setVertSpeed(X, X);  // Encoder AP vertical sped
+Encoder     setAlt(0, 27);          // Encoder AP altitude
+Encoder     setHdg_2(1, 3);         // Encoder AP heading
+Encoder     setSpeed(2, 4);         // Encoder AP speed
+Encoder     setVertSpeed(18, 20);   // Encoder AP vertical sped
 
 // X-Plane objects
 FlightSimCommand    APAltUp;
@@ -33,10 +34,17 @@ long hdg_enc        = 0;
 long speed_enc      = 0;
 long vertspeed_enc  = 0;
 
-long enc1 = 0;              // actual encoder readings
-long enc2 = 0;
-long enc3 = 0;
-long enc4 = 0;
+long enc1           = 0;    // actual encoder readings
+long enc2           = 0;
+long enc3           = 0;
+long enc4           = 0;
+
+elapsedMillis e_millis;
+unsigned long last_millis   = 0;
+unsigned long act_millis    = 0;
+unsigned long diff_millis   = 0;
+
+unsigned int accel = 0;
 
 // setup function is called once when Teensy boots up
 void setup_encoder()
@@ -57,24 +65,52 @@ void setup_encoder()
 void loop_encoder()
 {
 
-    // read COM1 encoder and send
+    // read altitude encoder and send
     // commands to simulator
-    enc1 = wheel_1.read();
-    if (enc1 > com1_enc + RESOLUTION)
+    enc1 = setAlt.read();
+    if (enc1 > alt_enc + RESOLUTION)
     {
-        if (com1_big)
-            COM1CoarseUp.once();
-        else
-            COM1FineUp.once();
-        com1_enc = enc1;
+        // store elapsed milliseconds
+        act_millis = e_millis;
+        diff_millis = act_millis - last_millis;
+        if (diff_millis > 1000)                 // more thanv1000ms since last call
+        {
+            APAltUp.once();                     // normal one step change
+        }
+        else                                    // less than 1000ms since last call
+        {
+            accel = (1000 / (diff_millis/3));   // acceleration alg. (prevents prolonged turning of enc.)
+            while (accel >= 0)
+            {
+                APAltUp.once();
+                accel--;
+            }
+        }
+        alt_enc = enc1;
+        last_millis = act_millis;               // store elapsed millis for next call
+
     }
-    else if (enc1 < com1_enc - RESOLUTION)
+    else if (enc1 < alt_enc - RESOLUTION)
     {
-        if (com1_big)
-            COM1CoarseDown.once();
-        else
-            COM1FineDown.once();
-        com1_enc = enc1;
+        // store elapsed milliseconds
+        act_millis = e_millis;
+        diff_millis = act_millis - last_millis;
+        if (diff_millis > 1000)                 // more than 1000ms since last call
+        {
+            APAltDown.once();                   // normal one step change
+        }
+        else                                    // less than 1000ms since last call
+        {
+            accel = (1000 / (diff_millis/3));   // acceleration alg. (prevents prolonged turning of enc.)
+            while (accel >= 0)
+            {
+                APAltDown.once();
+                accel--;
+            }
+        }
+        alt_enc = enc1;
+        last_millis = act_millis;               // store elapsed millis for next call
+
     }
 
 }

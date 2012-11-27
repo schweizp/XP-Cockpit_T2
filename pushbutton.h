@@ -7,10 +7,22 @@
 
 //includes
 
-Bounce      shift_1(8, 10);         // COM1 shift big to small increment
+Bounce  audioCOM1(20, 10);      // Audio COM1
+Bounce  audioCOM2(21, 10);      // Audio COM2
+Bounce  audioNAV1();
+Bounce  audioNAV2();
+Bounce  audioADF1();
+Bounce  audioADF2();
+
+
 
 // X-Plane objects
-FlightSimCommand COM1StdbyFlip;
+FlightSimCommand AudioCOM1;
+FlightSimCommand AudioCOM2;
+FlightSimCommand AudioNAV1;
+FlightSimCommand AudioNAV2;
+FlightSimCommand AudioADF1;
+FlightSimCommand AudioADF2;
 
 // variables
 
@@ -24,7 +36,12 @@ void setup_pushbutton()
     pinMode(8, INPUT_PULLUP);
 
     // configure the X-plane variables
-    COM1StdbyFlip = XPlaneRef("sim/radios/com1_standy_flip");
+    AudioCOM1 = XPlaneRef("sim/audio_panel/select_audio_com1");
+    AudioCOM2 = XPlaneRef("sim/audio_panel/select_audio_com2");
+    AudioNAV1 = XPlaneRef("sim/audio_panel/select_audio_nav1");
+    AudioNAV2 = XPlaneRef("sim/audio_panel/select_audio_nav2");
+    AudioADF1 = XPlaneRef("sim/audio_panel/select_audio_adf1");
+    AudioADF2 = XPlaneRef("sim/audio_panel/select_audio_adf2");
 }
 
 // loop functions is called repeatedly as long as Teensy is powered up
