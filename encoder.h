@@ -16,7 +16,7 @@
 Encoder     setAlt(0, 27);          // Encoder AP altitude
 Encoder     setHdg_2(1, 3);         // Encoder AP heading
 Encoder     setSpeed(2, 4);         // Encoder AP speed
-Encoder     setVertSpeed(18, 20);   // Encoder AP vertical sped
+Encoder     setVertSpeed(18, 19);   // Encoder AP vertical sped
 
 // X-Plane objects
 FlightSimCommand    APAltUp;
