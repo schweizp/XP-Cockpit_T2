@@ -1,6 +1,6 @@
 // Cockpit for X-Plane using Teensy++ 2.0 Boards
 //
-// Version 0.30
+// Version 0.40
 // by Philemon Schweizer
 //
 // Teensy Board No.2

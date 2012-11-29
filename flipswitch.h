@@ -123,6 +123,17 @@ void setup_flipswitch()
     pinMode(16, INPUT_PULLUP);
     pinMode(17, INPUT_PULLUP);
 
+    pinMode(28, OUTPUT);            // LEDs on flipswitches
+    pinMode(29, OUTPUT);
+    pinMode(30, OUTPUT);
+    pinMode(31, OUTPUT);
+    pinMode(32, OUTPUT);
+    pinMode(33, OUTPUT);
+    pinMode(34, OUTPUT);
+    pinMode(35, OUTPUT);
+    pinMode(36, OUTPUT);
+    pinMode(37, OUTPUT);
+    pinMode(6,  OUTPUT);
 
     // configure the X-Plane variables
     Battery1On      = XPlaneRef("sim/electrical/battery_1_on");
@@ -202,16 +213,19 @@ void setup_flipswitch()
     // Synchronize state of X-plane to flipswitches
     if (switchBattery.read() == LOW)
     {
+        digitalWrite(25, LOW);
         Battery1Off.once();
         Battery2Off.once();
     }
     else if (switchBattery.read() == HIGH)
     {
+        digitalWrite(25, HIGH);
         Battery1On.once();
         Battery2On.once();
     }
     if (switchGenerator.read() == LOW)
     {
+        digitalWrite(26, LOW);
         Generator1Off.once();
         Generator2Off.once();
         Generator3Off.once();
@@ -223,6 +237,7 @@ void setup_flipswitch()
     }
     else if (switchGenerator.read() == HIGH)
     {
+        digitalWrite(26, HIGH);
         Generator1On.once();
         Generator2On.once();
         Generator3On.once();
@@ -235,46 +250,57 @@ void setup_flipswitch()
     }
     if (switchBeacon.read() == LOW)
     {
+        digitalWrite(30, LOW);
         BeaconOff.once();
     }
     else if (switchBeacon.read() == HIGH)
     {
+        digitalWrite(30, HIGH)
         BeaconOn.once();
     }
     if (switchStrobe.read() == LOW)
     {
+        digitalWrite(31, LOW);
         StrobeOff.once();
     }
     else if (switchStrobe.read() == HIGH)
     {
+        digitalWrite(31, HIGH);
         StrobeOn.once();
     }
     if (switchNavLight.read() == LOW)
     {
+        digitalWrite(32, LOW);
         NavLightOff.once();
     }
     else if (switchNavLight.read() == HIGH)
     {
+        digitalWrite(32, HIGH);
         NavLightOn.once();
     }
     if (switchLanding.read() == LOW)
     {
+        digitalWrite(33, LOW);
         LandingLightOff.once();
     }
     else if (switchLanding.read() == HIGH)
     {
+        digitalWrite(33, HIGH);
         LandingLightOn.once();
     }
     if (switchTaxi.read() == LOW)
     {
+        digitalWrite(34, LOW);
         TaxiLightOff.once();
     }
     else if (switchTaxi.read() == HIGH)
     {
+        digitalWrite(34, HIGH);
         TaxiLightOn.once();
     }
     if (switchFuelPump.read() == LOW)
     {
+        digitalWrite(35, LOW);
         FuelPump1Off.once();
         FuelPump2Off.once();
         FuelPump3Off.once();
@@ -286,6 +312,7 @@ void setup_flipswitch()
     }
     else if (switchFuelPump.read() == HIGH)
     {
+        digitalWrite(35, HIGH);
         FuelPump1On.once();
         FuelPump2On.once();
         FuelPump3On.once();
@@ -297,26 +324,31 @@ void setup_flipswitch()
     }
     if (switchPitotHeat.read() == LOW)
     {
+        digitalWrite(36, LOW);
         PitotHeatOff.once();
     }
     else if (switchPitotHeat.read() == HIGH)
     {
+        digitalWrite(36, HIGH);
         PitotHeatOn.once();
     }
     if (switchAvionics.read() == LOW)
     {
+        digitalWrite(37, LOW);
         AvionicsOff.once();
     }
     else if (switchAvionics.read() == HIGH)
     {
-        AvionicsOn.once();
+        AvionicsOn.once(37, HIGH);
     }
     if (switchAutoPilot.read() == LOW)
     {
+        digitalWrite(6, LOW);
         FDirOn.once();
     }
     else if (switchAutoPilot.read() == HIGH)
     {
+        digitalWrite(6, HIGH);
         FDirServosOn.once();
     }
     // read state of input pin for rotary switch and send
@@ -365,17 +397,20 @@ void loop_flipswitch()
     if (switchBattery.update())             // battery switch changed
         if (switchBattery.read() == LOW)
         {
+            digitalWrite(28, LOW);
             Battery1Off.once();
             Battery2Off.once();
         }
         else if (switchBattery.read() == HIGH)
         {
+            digitalWrite(28, HIGH);
             Battery1On.once();
             Battery2On.once();
         }
     if (switchGenerator.update())             // generator switch changed
         if (switchGenerator.read() == LOW)
         {
+            digitalWrite(29, LOW);
             Generator1Off.once();
             Generator2Off.once();
             Generator3Off.once();
@@ -387,6 +422,7 @@ void loop_flipswitch()
         }
         else if (switchGenerator.read() == HIGH)
         {
+            digitalWrite(29, HIGH);
             Generator1On.once();
             Generator2On.once();
             Generator3On.once();
@@ -400,51 +436,62 @@ void loop_flipswitch()
     if (switchBeacon.update())             // beacon switch changed
         if (switchBeacon.read() == LOW)
         {
+            digitalWrite(30, LOW);
             BeaconOff.once();
         }
         else if (switchBeacon.read() == HIGH)
         {
+            digitalWrite(30, HIGH);
             BeaconOn.once();
         }
     if (switchStrobe.update())             // strobe switch changed
         if (switchStrobe.read() == LOW)
         {
+            digitalWrite(31, LOW);
             StrobeOff.once();
         }
         else if (switchStrobe.read() == HIGH)
         {
+            digitalWrite(31, HIGH);
             StrobeOn.once();
         }
     if (switchNavLight.update())             // navlight switch changed
         if (switchNavLight.read() == LOW)
         {
+            digitalWrite(32, LOW);
             NavLightOff.once();
         }
         else if (switchNavLight.read() == HIGH)
         {
+            digitalWrite(32, HIGH);
             NavLightOn.once();
         }
     if (switchLanding.update())             // landing light switch changed
         if (switchLanding.read() == LOW)
         {
+            digitalWrite(33, LOW);
             LandingLightOff.once();
         }
         else if (switchLanding.read() == HIGH)
         {
+            digitalWrite(33, HIGH);
             LandingLightOn.once();
         }
     if (switchTaxi.update())                // taxi light switch changed
         if (switchTaxi.read() == LOW)
         {
+            digitalWrite(34, LOW);
             TaxiLightOff.once();
         }
         else if (switchTaxi.read() == HIGH)
         {
+            digitalWrite(34, HIGH);
             TaxiLightOn.once();
         }
     if (switchFuelPump.update())             // fuel pump switch changed
         if (switchFuelPump.read() == LOW)
         {
+            digitalWrite(35, LOW);
             FuelPump1Off.once();
             FuelPump2Off.once();
             FuelPump3Off.once();
@@ -456,6 +503,7 @@ void loop_flipswitch()
         }
         else if (switchFuelPump.read() == HIGH)
         {
+            digitalWrite(35, HIGH);
             FuelPump1On.once();
             FuelPump2On.once();
             FuelPump3On.once();
@@ -468,28 +516,34 @@ void loop_flipswitch()
     if (switchPitotHeat.update())             // pitot heat switch changed
         if (switchPitotHeat.read() == LOW)
         {
+            digitalWrite(36, LOW);
             PitotHeatOff.once();
         }
         else if (switchPitotHeat.read() == HIGH)
         {
+            digitalWrite(36, HIGH);
             PitotHeatOn.once();
         }
     if (switchAvionics.update())             // avionics switch changed
         if (switchAvionics.read() == LOW)
         {
+            digitalWrite(37, LOW);
             AvionicsOff.once();
         }
         else if (switchAvionics.read() == HIGH)
         {
+            digitalWrite(37, HIGH);
             AvionicsOn.once();
         }
     if (switchAutoPilot.update())             // autopilot switch changed
         if (switchAutoPilot.read() == LOW)
         {
+            digitalWrite(6, LOW);
             FDirOn.once();
         }
         else if (switchAutoPilot.read() == HIGH)
         {
+            digitalWrite(6, HIGH);
             FDirServosOn.once();
         }
     // read state of input pin for rotary switch and send

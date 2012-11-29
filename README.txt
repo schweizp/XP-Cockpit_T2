@@ -10,7 +10,7 @@ switches, rotary encoders and a 4x20 LCD display.
 
 Actual state is not meant for general use.
 
-Version 0.30
+Version 0.40
 
 Requirements to compile and use this software:
 
@@ -28,10 +28,10 @@ Implemented but not tested yet:
 - pushbuttons
 - flip switches
 - rotary switch
+- LEDs
 
 Not working:
 - encoders (one implemented algorithm to test)
-- LEDs
+
 
 ToDo:
-- Implement LEDs for flipswitches
